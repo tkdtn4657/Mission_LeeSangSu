@@ -68,7 +68,7 @@ public class LikeablePersonController {
         return "usr/likeablePerson/list";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()") //필수문제 구현한 부분
     @GetMapping("/delete/{id}")
     public String likeablePersonDelete(Principal principal, @PathVariable("id") Integer id) throws DataNotFoundException {
         LikeablePerson likeablePerson = likeablePersonService.getPerson(id);

@@ -50,7 +50,7 @@ public class LikeablePersonService {
         return likeablePersonRepository.findByFromInstaMemberId(fromInstaMemberId);
     }
 
-    public LikeablePerson getPerson(Integer id) throws DataNotFoundException {
+    public LikeablePerson getPerson(Integer id) throws DataNotFoundException { //필수문제 구현한 부분
         Optional<LikeablePerson> likeablePerson = this.likeablePersonRepository.findById(id);
         if (likeablePerson.isPresent()) {
             return likeablePerson.get();
