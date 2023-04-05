@@ -60,11 +60,9 @@ public class LikeablePersonService {
     }
 
     //delete 구현부
-    @Transactional // 트랜잭셔널 추가를 함으로 데이터 변경 가능
+    @Transactional // 트랜잭셔널 추가를 함으로 데이터 변경 가능 여기에서 좀 오래걸렸음.....
     public void delete(LikeablePerson likeablePerson) {
         likeablePersonRepository.delete(likeablePerson);
     }
-
-
     
 }
