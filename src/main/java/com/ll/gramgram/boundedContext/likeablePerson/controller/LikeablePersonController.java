@@ -76,6 +76,6 @@ public class LikeablePersonController {
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
 //        }
         likeablePersonService.delete(likeablePerson);
-        return "redirect:/";
+        return "redirect:/likeablePerson/list"; // 재실행되는 페이지 위치 수정
     }
 }
