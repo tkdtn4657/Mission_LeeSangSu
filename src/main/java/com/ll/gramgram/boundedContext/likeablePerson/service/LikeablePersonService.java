@@ -31,6 +31,10 @@ public class LikeablePersonService {
             return RsData.of("F-1", "본인을 호감상대로 등록할 수 없습니다.");
         }
 
+        if(RsData.){// 생성하기 전 검증필요?
+            return RsData.of("F-1", "동일한 사람에게 동일한 호감을 등록할 수 없습니다.");
+        }
+
         InstaMember fromInstaMember = member.getInstaMember();
         InstaMember toInstaMember = instaMemberService.findByUsernameOrCreate(username).getData();
 
@@ -42,6 +46,7 @@ public class LikeablePersonService {
                 .toInstaMemberUsername(toInstaMember.getUsername()) // 중요하지 않음
                 .attractiveTypeCode(attractiveTypeCode) // 1=외모, 2=능력, 3=성격
                 .build();
+
 
         likeablePersonRepository.save(likeablePerson); // 저장
 
@@ -83,5 +88,15 @@ public class LikeablePersonService {
             return RsData.of("F-2", "권한이 없습니다.");
 
         return RsData.of("S-1", "삭제가능합니다.");
+    }
+
+    public boolean checkTaste(LikeablePerson likeablePerson1, LikeablePerson likeablePerson2){
+        likeablePerson1.getAttractiveTypeDisplayName();
+        likeablePerson2.getAttractiveTypeDisplayName();
+        if(likeablePerson1.getAttractiveTypeDisplayName() == likeablePerson2.getAttractiveTypeDisplayName()){
+            return true;
+        }
+
+        return false;
     }
 }

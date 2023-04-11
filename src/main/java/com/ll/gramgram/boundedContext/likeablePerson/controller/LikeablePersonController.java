@@ -52,6 +52,8 @@ public class LikeablePersonController {
             return rq.historyBack(createRsData);
         }
 
+        //if(likeablePersonService.checkTaste())
+
         return rq.redirectWithMsg("/likeablePerson/list", createRsData);
     }
 
