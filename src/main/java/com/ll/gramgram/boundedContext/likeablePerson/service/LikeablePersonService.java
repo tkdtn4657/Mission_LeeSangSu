@@ -31,12 +31,10 @@ public class LikeablePersonService {
             return RsData.of("F-1", "본인을 호감상대로 등록할 수 없습니다.");
         }
 
-        if(RsData.){// 생성하기 전 검증필요?
-            return RsData.of("F-1", "동일한 사람에게 동일한 호감을 등록할 수 없습니다.");
-        }
-
         InstaMember fromInstaMember = member.getInstaMember();
         InstaMember toInstaMember = instaMemberService.findByUsernameOrCreate(username).getData();
+
+
 
         LikeablePerson likeablePerson = LikeablePerson
                 .builder()
@@ -47,6 +45,13 @@ public class LikeablePersonService {
                 .attractiveTypeCode(attractiveTypeCode) // 1=외모, 2=능력, 3=성격
                 .build();
 
+        if(likeablePersonRepository.findByFromInstaMemberIdAndToInstaMember_username(
+                likeablePerson.getToInstaMember().getId(),
+                likeablePerson.getToInstaMemberUsername()).getAttractiveTypeCode()
+                == attractiveTypeCode){
+            // 여기에 Like가 생성될 때 데이터검증이 하고싶음)
+            return RsData.of("F-3", "동일한 사람에게 동일한 호감을 등록할 수 없습니다.`");
+        }
 
         likeablePersonRepository.save(likeablePerson); // 저장
 
@@ -90,7 +95,7 @@ public class LikeablePersonService {
         return RsData.of("S-1", "삭제가능합니다.");
     }
 
-    public boolean checkTaste(LikeablePerson likeablePerson1, LikeablePerson likeablePerson2){
+    public boolean checkTaste(LikeablePerson likeablePerson1, LikeablePerson likeablePerson2){//이게 아니라면 findById로 하고싶은데...
         likeablePerson1.getAttractiveTypeDisplayName();
         likeablePerson2.getAttractiveTypeDisplayName();
         if(likeablePerson1.getAttractiveTypeDisplayName() == likeablePerson2.getAttractiveTypeDisplayName()){
