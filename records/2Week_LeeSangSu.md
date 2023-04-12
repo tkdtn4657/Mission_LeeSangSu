@@ -22,8 +22,17 @@
 **[접근 방법]**
 
 - 케이스 4 : 호감 사유를 비교해서 처리하면 되지 않을까?
-갑자기 푸시가 안돼요...
+
+Repository  
+LikeablePerson findByFromInstaMemberIdAndToInstaMember_username(long fromInstaMemberId, String username);
+
+Likeable like메서드에 추가 후에 검증했는데 로직까진 어떻게 구현한 듯 한데
+NPE에러가 발생 후에 잡지 못했다...
+
+어노테이션 NotNull을 쓰는건 아닌듯 하고 Optional을 써서 검증해야할 듯 한데 잘 모르겠다...
+ 
 
 
 **[특이사항]**
 
+전체 미완료

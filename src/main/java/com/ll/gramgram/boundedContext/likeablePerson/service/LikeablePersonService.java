@@ -7,6 +7,7 @@ import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import com.ll.gramgram.boundedContext.likeablePerson.repository.LikeablePersonRepository;
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ public class LikeablePersonService {
     private final InstaMemberService instaMemberService;
 
     @Transactional
-    public RsData<LikeablePerson> like(Member member, String username, int attractiveTypeCode) {
+    public RsData<LikeablePerson> like(@NotNull Member member, String username, int attractiveTypeCode) {
         if (member.hasConnectedInstaMember() == false) {
             return RsData.of("F-2", "먼저 본인의 인스타그램 아이디를 입력해야 합니다.");
         }
@@ -46,7 +47,7 @@ public class LikeablePersonService {
                 .build();
 
         if(likeablePersonRepository.findByFromInstaMemberIdAndToInstaMember_username(
-                likeablePerson.getToInstaMember().getId(),
+                likeablePerson.getToInstaMember().getId() ,
                 likeablePerson.getToInstaMemberUsername()).getAttractiveTypeCode()
                 == attractiveTypeCode){
             // 여기에 Like가 생성될 때 데이터검증이 하고싶음)
@@ -95,13 +96,6 @@ public class LikeablePersonService {
         return RsData.of("S-1", "삭제가능합니다.");
     }
 
-    public boolean checkTaste(LikeablePerson likeablePerson1, LikeablePerson likeablePerson2){//이게 아니라면 findById로 하고싶은데...
-        likeablePerson1.getAttractiveTypeDisplayName();
-        likeablePerson2.getAttractiveTypeDisplayName();
-        if(likeablePerson1.getAttractiveTypeDisplayName() == likeablePerson2.getAttractiveTypeDisplayName()){
-            return true;
-        }
 
-        return false;
-    }
+
 }
