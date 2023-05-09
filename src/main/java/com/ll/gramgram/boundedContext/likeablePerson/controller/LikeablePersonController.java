@@ -123,16 +123,31 @@ public class LikeablePersonController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/toList") //필수미션 참고링크 https://localhost/usr/likeablePerson/toList?gender=M&attractiveTypeCode=&sortCode=1
     // RequestParam 실패 required=false사용해도 실패 -> 오류내역 확인 결과 객체래퍼로 선언권고 char -> Character로 변경 후 페이지 정상 로드
-    public String showToList(Model model, @RequestParam(value = "gender", required = false)Character gender) { // 내가 바꾼것 : RequestParam으로 성별을 받아올 것.
+    public String showToList(Model model, @RequestParam(value = "gender", required = false)String gender) { // 내가 바꾼것 : RequestParam으로 성별을 받아올 것.
         InstaMember instaMember = rq.getMember().getInstaMember();
+        //getGenderDisplayName
+        String selectGender;
 
-        // 인스타인증을 했는지 체크
-        if (instaMember != null) {
+        if(gender != null) {
+            if(gender.equals("M")) {
+                selectGender = "남성";
+            } else {
+                selectGender = "여성";
+            }
+            // 인스타인증을 했는지 체크
+            if (instaMember != null) { // 중복이 발생함 리팩토링해야할듯
+                // 해당 인스타회원이 좋아하는 사람들 목록
+                if(instaMember.getGenderDisplayName().equals(selectGender)) {
+                    List<LikeablePerson> likeablePeople = instaMember.getToLikeablePeople();
+                    model.addAttribute("likeablePeople", likeablePeople);
+                    System.out.println(likeablePeople);
+                }
+            }
+        }else if (instaMember != null) {
             // 해당 인스타회원이 좋아하는 사람들 목록
             List<LikeablePerson> likeablePeople = instaMember.getToLikeablePeople();
             model.addAttribute("likeablePeople", likeablePeople);
         }
-
         return "usr/likeablePerson/toList";
     }
 }
