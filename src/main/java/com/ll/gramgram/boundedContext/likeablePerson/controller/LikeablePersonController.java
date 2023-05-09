@@ -121,8 +121,9 @@ public class LikeablePersonController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/toList")
-    public String showToList(Model model) {
+    @GetMapping("/toList") //필수미션 참고링크 https://localhost/usr/likeablePerson/toList?gender=M&attractiveTypeCode=&sortCode=1
+    // RequestParam 실패 required=false사용해도 실패 -> 오류내역 확인 결과 객체래퍼로 선언권고 char -> Character로 변경 후 페이지 정상 로드
+    public String showToList(Model model, @RequestParam(value = "gender", required = false)Character gender) { // 내가 바꾼것 : RequestParam으로 성별을 받아올 것.
         InstaMember instaMember = rq.getMember().getInstaMember();
 
         // 인스타인증을 했는지 체크
