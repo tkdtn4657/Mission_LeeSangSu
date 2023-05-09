@@ -126,12 +126,12 @@ public class LikeablePersonController {
     public String showToList(Model model, @RequestParam(value = "gender", required = false)String gender) { // 내가 바꾼것 : RequestParam으로 성별을 받아올 것.
         InstaMember instaMember = rq.getMember().getInstaMember();
         //getGenderDisplayName
-        String selectGender;
+        String selectGender = "";
 
         if(gender != null) {
             if(gender.equals("M")) {
                 selectGender = "남성";
-            } else {
+            } else if(gender.equals("W")){
                 selectGender = "여성";
             }
             // 인스타인증을 했는지 체크
@@ -140,7 +140,7 @@ public class LikeablePersonController {
                 if(instaMember.getGenderDisplayName().equals(selectGender)) {
                     List<LikeablePerson> likeablePeople = instaMember.getToLikeablePeople();
                     model.addAttribute("likeablePeople", likeablePeople);
-                    System.out.println(likeablePeople);
+                    System.out.println(likeablePeople + "된건가?");
                 }
             }
         }else if (instaMember != null) {
