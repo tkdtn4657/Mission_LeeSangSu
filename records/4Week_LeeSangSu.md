@@ -19,5 +19,11 @@ init
 ---
 **[접근 방법]**
 
+1. 호감리스트 성별필터링기능
+https://localhost/usr/likeablePerson/toList?gender=M&attractiveTypeCode=&sortCode=1
+해당 링크의 gender=M을 매핑하는게 중요할 듯 합니다.
+likeablePerson/toList - likeableController 부터 체크
+
+
 
 **[특이사항]**
