@@ -124,32 +124,35 @@ public class LikeablePersonController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/toList") //필수미션 참고링크 https://localhost/usr/likeablePerson/toList?gender=M&attractiveTypeCode=&sortCode=1
+    @GetMapping("/toList")
+    //필수미션 참고링크 https://localhost/usr/likeablePerson/toList?gender=M&attractiveTypeCode=&sortCode=1
     // RequestParam 실패 required=false사용해도 실패 -> 오류내역 확인 결과 객체래퍼로 선언권고 char -> Character로 변경 후 페이지 정상 로드
-    public String showToList(Model model, @RequestParam(required = false)String gender) { // 내가 바꾼것 : RequestParam으로 성별을 받아올 것.
+    public String showToList(Model model, @RequestParam(required = false) String gender) { // 내가 바꾼것 : RequestParam으로 성별을 받아올 것.
         InstaMember instaMember = rq.getMember().getInstaMember();
-        //getGenderDisplayName
         List<LikeablePerson> likeablePeople = instaMember.getToLikeablePeople();
         if (instaMember != null) {
-            if(gender != null) {
-
-                //model.addAttribute("likeablePeople", likeablePeople);
-                // 인스타인증을 했는지 체크
-                if (instaMember != null) { // 중복이 발생함 리팩토링해야할듯
-                    // 해당 인스타회원이 좋아하는 사람들 목록
+            if (gender != null) {
+                if (gender.equals("M")) {
                     model.addAttribute("likeablePeople",
                             likeablePeople.stream() // likeablePerson에 있는 나를 좋아한 사람중 여성을 가져오기
-                                    .filter( gen ->
+                                    .filter(gen ->
                                             gen.getFromInstaMember()
                                                     .getGenderDisplayName()
                                                     .equals("남성"))
                                     .collect(Collectors.toList()));
                 }
+                if (gender.equals("W")) {
+                    model.addAttribute("likeablePeople",
+                            likeablePeople.stream() // likeablePerson에 있는 나를 좋아한 사람중 여성을 가져오기
+                                    .filter(gen ->
+                                            gen.getFromInstaMember()
+                                                    .getGenderDisplayName()
+                                                    .equals("여성"))
+                                    .collect(Collectors.toList()));
+                }
             }
-            else {
-            // 해당 인스타회원이 좋아하는 사람들 목록
-//            List<LikeablePerson> likeablePeople = instaMember.getToLikeablePeople();
-            model.addAttribute("likeablePeople", likeablePeople);
+            if(gender == null){
+                model.addAttribute("likeablePeople", likeablePeople);
             }
         }
         return "usr/likeablePerson/toList";
