@@ -21,3 +21,4 @@ logging:
 custom:
   site:
     baseUrl: https://www.codelike.app
+    #49.50.167.87:2226으로 변경해도 안됨.....
