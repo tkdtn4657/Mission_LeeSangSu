@@ -21,9 +21,12 @@ init
 
 1. 호감리스트 성별필터링기능
 https://localhost/usr/likeablePerson/toList?gender=M&attractiveTypeCode=&sortCode=1
-해당 링크의 gender=M을 매핑하는게 중요할 듯 합니다.
+해당 링크의 gender=M을 매핑하는게 중요할 듯
 likeablePerson/toList - likeableController 부터 체크
-
-
+stream().filter.equals()를 활용해서 특정 성별을 필터링 -> 리스트 출력
 
 **[특이사항]**
+어떻게 필터를 걸어야 할지 고민을 했는데 멘토님께 힌트를 받아서 일부 해결
+로직을 제대로 이해하지 못해서 발생한 문제였다.
+stream().filter().equals()를 통해서 하나의 성별을 필터해서 걸 수 있었다.
+두 성별 모두는 아직 구현 못했다.
